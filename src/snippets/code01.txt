@@ -1,0 +1,4 @@
+// go :: string -> string
+function go (s) {
+  return 'Hello ' + s
+}
