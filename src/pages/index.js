@@ -6,6 +6,7 @@ import SEO from '../components/seo'
 import Layout from '../components/layout'
 import {
   Chapters,
+  Game,
 } from '../components'
 
 const IndexPage = ({ data }) => {
@@ -18,6 +19,7 @@ const IndexPage = ({ data }) => {
       <div css={[ styles.container ]}>
         <div css={[ styles.left ]}>
           <div css={[ styles.game ]}>
+            <Game />
           </div>
         </div>
 
@@ -43,9 +45,6 @@ const styles = {
     height: 500,
   },
   game: {
-    height: 0,
-    paddingBottom: '100%',
-    backgroundColor: 'gainsboro',
   },
 }
 
