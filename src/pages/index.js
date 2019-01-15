@@ -1,132 +1,34 @@
 import React from 'react'
 import 'normalize.css'
+import { graphql } from 'gatsby'
 
 import SEO from '../components/seo'
 import Layout from '../components/layout'
 import {
-  Chapter,
-  Snippet,
-  Paragraph,
+  Chapters,
 } from '../components'
-import * as snippets from '../snippets'
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" keywords={[ 'coding', 'program', 'react', 'learn', 'tutorial', 'game', 'interactive tutorial' ]} />
+const IndexPage = ({ data }) => {
+  const { title, title1 } = data.site.siteMetadata
 
-    <div css={[ styles.container ]}>
-      <div css={[ styles.left ]}>
-        <div css={[ styles.game ]}>
+  return (
+    <Layout>
+      <SEO />
 
+      <div css={[ styles.container ]}>
+        <div css={[ styles.left ]}>
+          <div css={[ styles.game ]}>
+          </div>
+        </div>
+
+        <div css={[ styles.right ]}>
+          <Chapters title={title} title1={title1}  />
         </div>
       </div>
 
-      <div css={[ styles.right ]}>
-        <Chapter title={'Preface'}>
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-          <Snippet code={snippets.code01} />
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-        </Chapter>
-
-        <Chapter title={'Preface'}>
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-          <Snippet code={snippets.code01} />
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-        </Chapter>
-
-        <Chapter title={'Preface'}>
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-          <Snippet code={snippets.code01} />
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-        </Chapter>
-
-        <Chapter title={'Preface'}>
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-          <Snippet code={snippets.code01} />
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-        </Chapter>
-
-        <Chapter title={'Preface'}>
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-          <Snippet code={snippets.code01} />
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-        </Chapter>
-
-        <Chapter title={'Preface'}>
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-          <Snippet code={snippets.code01} />
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-        </Chapter>
-
-        <Chapter title={'Preface'}>
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-          <Snippet code={snippets.code01} />
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-        </Chapter>
-
-        <Chapter title={'Preface'}>
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-          <Snippet code={snippets.code01} />
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-        </Chapter>
-
-        <Chapter title={'Preface'}>
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-          <Snippet code={snippets.code01} />
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-        </Chapter>
-
-        <Chapter title={'Preface'}>
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-          <Snippet code={snippets.code01} />
-          <Paragraph>
-            학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.    학교 종이 땡땡땡 어서 모이자. 선생님이 우리를 기다리신다.
-          </Paragraph>
-        </Chapter>
-
-      </div>
-    </div>
-
-  </Layout>
-)
+    </Layout>
+  )
+}
 
 const styles = {
   container: {
@@ -146,5 +48,16 @@ const styles = {
     backgroundColor: 'gainsboro',
   },
 }
+
+export const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+        title1
+      }
+    }
+  }
+`
 
 export default IndexPage

@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: 'How to make Worm Game',
+    title: 'How to make Snake Game',
+    title1: '뱀 게임 만드는 법',
     description: 'Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.',
     author: '@gatsbyjs',
   },

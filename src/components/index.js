@@ -1,9 +1,5 @@
-import Chapter from './chapter'
-import Snippet from './snippet'
-import Paragraph from './paragraph'
+import Chapters from './chapters'
 
 export {
-  Chapter,
-  Snippet,
-  Paragraph,
+  Chapters,
 }

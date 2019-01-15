@@ -46,7 +46,7 @@ const styles = {
     paddingTop: 0,
   },
   header: {
-    marginBottom: '7em',
+    marginBottom: '5em',
     // backgroundColor: '#f1f3f5',
   },
 }

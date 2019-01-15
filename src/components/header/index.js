@@ -16,14 +16,17 @@ const Header = () => (
           </span>
           <span css={[ styles.headingLine ]} />
           <span css={[ styles.headingText2 ]}>
-            Worm Game
+            Snake Game
           </span>
         </h1>
       </div>
 
       <div css={[ styles.note ]}>
         <p css={[ styles.noteTitle ]}>
-          Feeding Worm
+          뱀 게임{' '}
+          <span css={[ styles.noteTitleEn ]}>
+            Feeding Snake
+          </span>
         </p>
         <p css={[ styles.noteText ]}>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt quaerat suscipit tempora voluptatibus.
@@ -95,7 +98,12 @@ const styles = {
     marginBottom: 0,
     fontSize: '1.05em',
     fontWeight: 'bold',
-    textDecoration: 'underline',
+  },
+  noteTitleEn: {
+    letterSpacing: '0.05em',
+    fontFamily: 'Georgia',
+    fontSize: '0.85em',
+    fontStyle: 'italic',
   },
   noteText: {
     marginTop: 0,
