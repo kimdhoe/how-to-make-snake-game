@@ -10,7 +10,7 @@ import {
 import * as snippets from '../../../snippets'
 
 const Chapter00 = ({ title, title1 }) => (
-  <Chapter title={'들어가며'}>
+  <Chapter number={0} title={'들어가며'}>
     <Paragraph>
       <InterestingWord text={'JavaScript'} />를 익혔고, {' '}
       <InterestingWord text={'React'} /> 튜토리얼도 한번 따라해보았나요?
