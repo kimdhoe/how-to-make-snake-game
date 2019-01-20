@@ -8,34 +8,45 @@ import React from 'react'
 // Size of the scene. Describes how many segments fit into a row or a column.
 // e.g. 20: Up to twenty segments can fit into one row/column.
 const SCENE_SIZE = 20
-// SEGMENT_SIZE :: number
+// CELL_SIZE :: number
 // A percentage value that tells how much space a segment occupies in a row/col.
 // That is:
-//   SEGMENT_SIZE * SCENE_SIZE = 100
+//   CELL_SIZE * SCENE_SIZE = 100
 // e.g. 5: 5%
-const SEGMENT_SIZE = 100 / SCENE_SIZE
+const CELL_SIZE = 100 / SCENE_SIZE
 const SNAKE_COLOR = '#5c940d'
-const FOOD_COLOR = '#e67700'
+const FOOD_COLOR = '#ffa8a8'
 
 // -----------------------------------------------------------------------------
 // Data Definitions
 // -----------------------------------------------------------------------------
 
-// A State is an object:
+// A World is an object:
 //   {
 //      snake: Snake,
-//      direction: Direction,
+//      food:  Position,
 //   }
 
-// A Snake is an array of Segments.
-const snake = segments => segments
+// world :: Snake * Position -> World
+const world = (snake, food) => ({ snake, food })
 
-// A Segment is an object:
+// A Snake is an object:
+//   {
+//     positions: Position[],
+//     direction: Direction,
+//   }
+
+// snake :: Position[] * Direction -> Snake
+const snake = (positions, direction) => ({ positions, direction })
+
+// A Position is an object:
 //   {
 //     x: number,
 //     y: number,
 //   }
-const segment = (x, y) => ({ x, y })
+
+// position :: number * number -> Position
+const position = (x, y) => ({ x, y })
 
 // A Direction is one of:
 //   - 'STOP'
@@ -51,113 +62,85 @@ const directions = {
   left: 'LEFT',
 }
 
-const initialState = {
-  direction: directions.right,
-  snake: snake([ segment(3, 3) ]),
-}
+const initialSnake = snake([ position(3, 3) ], directions.right)
+const initialWorld = world(initialSnake, position(15, 18))
 
 // An Action is one of:
-//   - TickAction
-//   - GoUpAction
-//   - GoRightAction
-//   - GoDownAction
-//   - GoLeftAction
-
-// A TickAction is an object:
-//   {
-//     type: 'TICK',
-//     direction: Direction
-//   }
-
-// A GoUpAction is an object:
-//   { type: 'GO_UP' }
-
-// A GoRightAction is an object:
-//   { type: 'GO_RIGHT' }
-
-// A GoDownAction is an object:
-//   { type: 'GO_DOWN' }
-
-// A GoLeftAction is an object:
-//   { type: 'GO_LEFT' }
-
-// An ActionType is one of:
-//   - 'TICK'
-//   - 'GO_UP'
-//   - 'GO_RIGHT'
-//   - 'GO_DOWN'
-//   - 'GO_LEFT'
-const actionTypes = {
-  tick: 'TICK',
-  up: 'GO_UP',
-  right: 'GO_RIGHT',
-  down: 'GO_DOWN',
-  left: 'GO_LEFT',
+//   - 'tick'
+//   - 'up'
+//   - 'down'
+//   - 'left'
+//   - 'right'
+const actions = {
+  tick: 'tick',
+  up: 'up',
+  down: 'down',
+  left: 'left',
+  right: 'right',
 }
-
-// tick :: Direction -> TickAction
-// Given a direction, produces a tick action.
-const tick = direction => ({
-  type: actionTypes.tick,
-  direction,
-})
-
-// goUp :: -> GoUpAction
-const goUp = () => ({ type: actionTypes.up })
-
-// goRight :: -> GoRightAction
-const goRight = () => ({ type: actionTypes.right })
-
-// goDown :: -> GoDownAction
-const goDown = () => ({ type: actionTypes.down })
-
-// goLeft :: -> GoLeftAction
-const goLeft = () => ({ type: actionTypes.left })
 
 // -----------------------------------------------------------------------------
 // Functions
 // -----------------------------------------------------------------------------
 
-// nextState :: State * Action -> State
+// nextWorld :: World * Action -> World
 // Given a state and an action, produces a next state.
-const nextState = (state = initialState, action) => {
-  if (!action) return state
+const nextWorld = (world = initialWorld, action) => {
+  if (!action) return world
 
   return {
-    direction: nextDirection(state.direction, action),
-    snake: nextSnake(state.snake, action),
+    snake: nextSnake(world.snake, world.food, action),
   }
 }
 
-// nextDirection :: Direction * Action -> Direction
-// Given a state and an action, produces a next direction.
-const nextDirection = (direction, action) => {
-  switch (action.type) {
-    case actionTypes.up:
-      return directions.up
-    case actionTypes.right:
-      return directions.right
-    case actionTypes.down:
-      return directions.down
-    case actionTypes.left:
-      return directions.left
-    default:
-      return direction
-  }
-}
-
-// nextSnake :: Snake * Action -> Snake
+// nextSnake :: Snake * Position * Action -> Snake
 // Given a state and an action, produces a next snake.
-const nextSnake = (currentSnake, action) => {
-  switch (action.type) {
-    case actionTypes.tick: {
-      const newHead = nextHead(currentSnake[0], action.direction)
-      const tail = currentSnake.slice(0, currentSnake.length - 1)
+const nextSnake = (oldSnake, food, action) => {
+  switch (action) {
+    case actions.tick: {
+      // newHead :: Position
+      const newHead = nextHead(oldSnake.positions[0], oldSnake.direction)
 
-      return snake([ newHead, ...tail ])
+      if (isDead(newHead, food, oldSnake.positions)) {
+        return oldSnake
+      }
+
+      // eatingFood :: boolean
+      const eatingFood = isSamePosition(newHead, food)
+
+      if (eatingFood) {
+        return snake(
+          [ newHead, ...oldSnake.positions ],
+          oldSnake.direction
+        )
+      } else {
+        return snake(
+          [
+            newHead,
+            ...oldSnake.positions.slice(0, oldSnake.positions.length - 1)
+          ],
+          oldSnake.direction
+        )
+      }
     }
+    case actions.up:
+      return oldSnake.direction === directions.down
+        ? oldSnake
+        : snake(oldSnake.positions, directions.up)
+    case actions.right:
+      return oldSnake.direction === directions.left
+        ? oldSnake
+        : snake(oldSnake.positions, directions.right)
+    case actions.down:
+      return oldSnake.direction === directions.up
+        ? oldSnake
+        : snake(oldSnake.positions, directions.down)
+    case actions.left:
+      return oldSnake.direction === directions.right
+        ? oldSnake
+        : snake(oldSnake.positions, directions.left)
     default:
-      return currentSnake
+      return oldSnake
   }
 }
 
@@ -175,27 +158,42 @@ const nextHead = (currentHead, direction) => {
     x = x - 1
   }
 
-  return segment(x, y)
+  return position(x, y)
 }
+
+const isDead = (newHead, food, snakePositions) =>
+  newHead.x >= SCENE_SIZE ||
+  newHead.y >= SCENE_SIZE ||
+  newHead.x < 0 ||
+  newHead.y < 0 ||
+  isEatingSelf(newHead, snakePositions)
+
+// isSamePosition :: Position * Position -> boolean
+const isSamePosition = (position1, position2) =>
+  position1.x === position2.x && position1.y === position2.y
+
+// isEatingSelf :: Position * Position[] -> boolean
+const isEatingSelf = (position, positions) =>
+  positions.some(p => isSamePosition(p, position))
 
 // -----------------------------------------------------------------------------
 // View
 // -----------------------------------------------------------------------------
 
 class Game extends React.Component {
-  state = nextState()
+  state = nextWorld()
 
   componentDidMount () {
     // Install keyboard input listener.
-    document.addEventListener('keyup', this.handleKey)
+    document.addEventListener('keydown', this.handleKey)
 
     // Install tick interval timer.
-    setInterval(this.handleTick, 1000)
+    setInterval(this.handleTick, 100)
   }
 
   // handleTick :: -> void
   handleTick = () => {
-    this.setState(state => nextState(state, tick(state.direction)))
+    this.setState(state => nextWorld(state, actions.tick))
   }
 
   // handleKey :: KeyboardEvent -> void
@@ -203,60 +201,84 @@ class Game extends React.Component {
     let action = null
 
     if (key === 'ArrowUp' || key === 'k') {
-      action = goUp()
+      action = actions.up
     } else if (key === 'ArrowRight' || key === 'l') {
-      action = goRight()
+      action = actions.right
     } else if (key === 'ArrowDown' || key === 'j') {
-      action = goDown()
+      action = actions.down
     } else if (key === 'ArrowLeft' || key === 'h') {
-      action = goLeft()
+      action = actions.left
     }
 
     if (action) {
-      this.setState(state => nextState(state, action))
+      this.setState(state => nextWorld(state, action))
     }
   }
 
+  // render :: -> ReactElement
   render () {
-    return (
-      <div css={[ styles.container ]}>
-        <Snake segments={this.state.snake} />
-      </div>
-    )
+    return <Scene world={this.state} />
   }
 }
 
-const Snake = ({ segments }) => (
+// -----------------------------------------------------------------------------
+// View
+// -----------------------------------------------------------------------------
+
+// Scene :: World -> ReactElement
+const Scene = ({ world }) => (
+  <div
+    style={{
+      position: 'relative',
+      paddingBottom: '100%',
+      width: '100%',
+      height: 0,
+      border: '1px solid #ced4da',
+      backgroundColor: '#f1f3f5',
+    }}
+  >
+    <FoodComponent position={world.food} />
+    <SnakeComponent snake={world.snake} />
+  </div>
+)
+
+// SnakeComponent :: Snake -> ReactElement
+const SnakeComponent = ({ snake }) => (
   <>
-    {segments.map((segment, i) => (
-      <Segment key={i} x={segment.x} y={segment.y} />
+    {snake.positions.map((position, i) => (
+      <PositionComponent
+        key={i}
+        x={position.x}
+        y={position.y}
+      />
     ))}
   </>
 )
 
-const Segment = ({ x, y }) => (
-  <div
-    css={{
-      position: 'absolute',
-      left: `${x / SCENE_SIZE * 100}%`,
-      top: `${y / SCENE_SIZE * 100}%`,
-      width: `${SEGMENT_SIZE}%`,
-      height: `${SEGMENT_SIZE}%`,
-      borderRadius: '50%',
-      backgroundColor: SNAKE_COLOR,
-    }}
+// PositionComponent :: Position -> ReactElement
+const FoodComponent = ({ position }) => (
+  <PositionComponent
+    food
+    x={position.x}
+    y={position.y}
   />
 )
 
-const styles = {
-  container: {
-    position: 'relative',
-    overflow: 'hidden',
-    width: '100%',
-    height: 0,
-    paddingBottom: '100%',
-    backgroundColor: '#f1f3f5',
-  },
-}
+// PositionComponent :: number * number * boolean -> ReactElement
+const PositionComponent = ({ x, y, food = false }) => (
+  <div
+    css={{
+      position: 'absolute',
+      borderRadius: '50%',
+    }}
+    style={{
+      left: `${x / SCENE_SIZE * 100}%`,
+      top: `${y / SCENE_SIZE * 100}%`,
+      width: `${CELL_SIZE}%`,
+      height: `${CELL_SIZE}%`,
+      backgroundColor: food ? FOOD_COLOR : SNAKE_COLOR,
+    }}
+  />
+)
 
 export default Game

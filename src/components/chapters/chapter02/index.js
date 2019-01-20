@@ -493,6 +493,15 @@ const Snake = snake => (
     </Paragraph>
 
     <Snippet
+      hideFilename
+      code={
+        `\
+// An Action is one of:
+//   - 'tick'`
+      }
+    />
+
+    <Snippet
       code={
         `\
 // World * Action -> World
@@ -546,7 +555,29 @@ const nextSnake = (snake, action) => snake`
     <Paragraph>
       여기서는 <Code code={'tick'}/>이라는 액션에 대해서만 새로운 상태를 만들어 반환하고 있는데,
       이 액션의 의도는 일정 시간의 경과에 따라 뱀의 위치가 업데이트된 새로운 상태를 만들어내는 것입니다.
+      {' '}<Code code={'tick'}/> 액션이 발생할 때마다 뱀의 상태를 업데이트해 줄 수 있도록{' '}
+      <Code code={'nextSnake'}/> 함수를 완성해 볼까요? 뱀의 위치와 방향을 다루는 게 이 게임의
+      핵심인 만큼 이 함수의 역할이 큽니다.
     </Paragraph>
+
+    <Snippet
+      code={
+        `\
+// Snake * Action -> Snake
+const nextSnake = (snake, action) => {
+  if (action === 'tick') {
+    return snake(
+      position(
+        
+      ),
+      snake.direction,
+    )
+  }
+
+  return snake
+}`
+      }
+    />
   </Chapter>
 )
 
