@@ -5,6 +5,8 @@ import {
   Paragraph,
   InterestingWord,
   BoringWord,
+  H3,
+  Code,
   Snippet,
 } from '../shared'
 import * as snippets from '../../../snippets'
@@ -61,6 +63,35 @@ const Chapter00 = ({ title, title1 }) => (
         게임 상에서 일어나는 변화를 어떻게 처리하고 반영할 것인가?
       </li>
     </ul>
+
+    <H3 number={'0.1'} text={'프로젝트 설정'} />
+
+    <Paragraph>
+      이 튜토리얼은 복잡한 설정을 피하기 위해{' '}
+      <a
+        css={{ color: '#333', }}
+        href=""
+      >
+        <InterestingWord very text={'create-react-app'}/>
+      </a>을 사용합니다. 새로 생성한 프로젝트의 <Code code={'src/App.js'}/> 파일의 내용을
+      지운 후, 아래와 같은 상태에서 시작하도록 하겠습니다.
+    </Paragraph>
+
+    <Snippet
+      changed={[ 1, 9 ]}
+      code={
+        `\
+import React from 'react'
+
+class Game extends React.Component {
+  render () {
+    return null
+  }
+}
+
+export default Game`
+      }
+    />
   </Chapter>
 )
 

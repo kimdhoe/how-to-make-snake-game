@@ -1,5 +1,4 @@
 import React from 'react'
-import 'normalize.css'
 import { graphql } from 'gatsby'
 
 import SEO from '../components/seo'
@@ -25,6 +24,7 @@ const IndexPage = ({ data }) => {
 
         <div css={[ styles.right ]}>
           <Chapters title={title} title1={title1} />
+          <div css={{ height: 700 }} />
         </div>
       </div>
 
