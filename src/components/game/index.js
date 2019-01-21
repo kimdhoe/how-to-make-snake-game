@@ -85,12 +85,55 @@ const actions = {
 
 // nextWorld :: World * Action -> World
 // Given a state and an action, produces a next state.
-const nextWorld = (world = initialWorld, action) => {
-  if (!action) return world
+const nextWorld = (oldWorld = initialWorld, action) => {
+  if (!action) return oldWorld
+
+  switch (action) {
+    case actions.tick: {
+      // oldSnake :: Snake
+      const oldSnake = oldWorld.snake
+      // newHead :: Position
+      const newHead = nextHead(oldSnake.positions[0], oldSnake.direction)
+
+      if (isDead(newHead, oldSnake.positions)) {
+        return oldWorld
+      }
+
+      // eatingFood :: boolean
+      const eatingFood = isSamePosition(newHead, oldWorld.food)
+
+      if (eatingFood) {
+        const newPositions = [ newHead, ...oldSnake.positions ]
+
+        return world(
+          snake(newPositions, oldSnake.direction),
+          nextFood(newPositions)
+        )
+      } else {
+        return snake(
+          [
+            newHead,
+            ...oldSnake.positions.slice(0, oldSnake.positions.length - 1)
+          ],
+          oldSnake.direction
+        )
+      }
+    }
+  }
+
+  return world(
+    nextSnake(oldWorld.snake, oldWorld.food, action),
+    oldWorld.food,
+  )
 
   return {
     snake: nextSnake(world.snake, world.food, action),
   }
+}
+
+// nextFood :: Position[] -> Position
+const nextFood = positions => {
+
 }
 
 // nextSnake :: Snake * Position * Action -> Snake
@@ -161,20 +204,25 @@ const nextHead = (currentHead, direction) => {
   return position(x, y)
 }
 
-const isDead = (newHead, food, snakePositions) =>
-  newHead.x >= SCENE_SIZE ||
-  newHead.y >= SCENE_SIZE ||
-  newHead.x < 0 ||
-  newHead.y < 0 ||
-  isEatingSelf(newHead, snakePositions)
+const isDead = (newHead, snakePositions) =>
+  hitsWall(newHead) || isEatingSelf(newHead, snakePositions)
 
 // isSamePosition :: Position * Position -> boolean
 const isSamePosition = (position1, position2) =>
   position1.x === position2.x && position1.y === position2.y
 
+const hitsWall = position =>
+  position.x >= SCENE_SIZE ||
+  position.y >= SCENE_SIZE ||
+  position.x < 0 ||
+  position.y < 0
+
+
 // isEatingSelf :: Position * Position[] -> boolean
 const isEatingSelf = (position, positions) =>
-  positions.some(p => isSamePosition(p, position))
+  positions.slice(0, positions.length - 1).some(
+    p => isSamePosition(p, position)
+  )
 
 // -----------------------------------------------------------------------------
 // View
