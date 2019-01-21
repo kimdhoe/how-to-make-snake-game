@@ -16,11 +16,11 @@ const IndexPage = ({ data }) => {
       <SEO />
 
       <div css={[ styles.container ]}>
-        <div css={[ styles.left ]}>
-          <div css={[ styles.game ]}>
-            <Game />
-          </div>
-        </div>
+        {/*<div css={[ styles.left ]}>*/}
+          {/*<div css={[ styles.game ]}>*/}
+            {/*<Game />*/}
+          {/*</div>*/}
+        {/*</div>*/}
 
         <div css={[ styles.right ]}>
           <Chapters title={title} title1={title1} />
@@ -40,11 +40,14 @@ const styles = {
     width: '40%',
   },
   right: {
-    marginLeft: 50,
-    width: '60%',
-    height: 500,
+    // marginLeft: 50,
+    // width: '60%',
   },
   game: {
+    position: 'sticky',
+    top: '25vh',
+    height: '50vh',
+    // transform: 'translateY(-50%)',
   },
 }
 

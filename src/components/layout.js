@@ -42,7 +42,7 @@ Layout.propTypes = {
 const styles = {
   container: {
     margin: '0 auto',
-    maxWidth: 960,
+    maxWidth: 1024,
     padding: '0px 1.0875rem 1.45rem',
     paddingTop: 0,
   },
