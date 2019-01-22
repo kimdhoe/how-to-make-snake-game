@@ -15,11 +15,8 @@ import {
   StickyContainer,
 } from '../shared'
 import * as snippets from '../../../snippets'
-import ConstantsFigure from '../../constants-figure'
-import StateFigure from '../../state-figure'
-import EmptySceneFigure from '../../empty-scene-figure'
-import StillHeadFigure from '../../still-head-figure'
 import MovingHeadFigure from '../../moving-head-figure'
+import ControllableHeadFigure from '../../controllable-head-figure'
 
 const Chapter04 = ({ title, title1 }) => (
   <Chapter number={4} title={'액션'}>
@@ -128,26 +125,6 @@ const nextWorld = (oldWorld, action) => {
         <Snippet
           code={
             `\
-class Game extends React.Component {
-  // World
-  state = initialWorld
-
-  // -> void
-  componentDidMount () {
-    setInterval(this.handleTick, INTERVAL)
-  }
-
-  // -> void
-  handleTick = () => {
-    this.setState(oldWorld => nextWorld(oldWorld, 'tick'))
-  }
-`
-          }
-        />
-
-        <Snippet
-          code={
-            `\
 /// World * Action -> World
 const nextWorld = (oldWorld, action) => {
   if (action === 'tick') {
@@ -180,6 +157,77 @@ const nextHead = (posn, dir) => {
   return position(x, y)
 }
 `
+          }
+        />
+
+        <Paragraph>
+          위 코드에서 뱀의 새로운 위치를 구하기 위해 <Code code={'nextHead'}/>라는 보조 함수를
+          사용하고 있습니다. <Code code={'nextHead'}/>는 현재 진행 방향에 따라{' '}
+          <Code code={'x'}/> 혹은 <Code code={'y'}/> 좌표값 중 하나의 값을 증가 혹은
+          감소시켜 새로운 <DataType text={'Position'}/>을 만들고 있습니다. 이걸로{' '}
+          <Code code={'nextWorld'}/>는 <Code code={'tick'}/>이 발생할 때마다 새로운
+          <DataType text={'World'}/>를 만들어낼 준비가
+          끝났습니다. 이제 일정 시간 간격으로 <Code code={'tick'}/>을 반복 발생시킬
+          타이머만 있으면 움직이는 뱀을 볼 수 있습니다.
+        </Paragraph>
+
+        <Snippet
+          code={
+            `\
+class Game extends React.Component {
+  // World
+  state = initialWorld
+
+  // -> void
+  componentDidMount () {
+    setInterval(this.handleTick, INTERVAL)
+  }
+
+  // -> void
+  handleTick = () => {
+    this.setState(oldWorld => nextWorld(oldWorld, 'tick'))
+  }
+`
+          }
+        />
+
+        <Paragraph>
+          뱀이 움직이면서 게임이 진행될 수 있도록 <Code code={'INTERVAL'}/> 밀리초 간격으로
+          {' '}<Code code={'handleTick'}/> 메써드를 실행하는 타이머를 설치헀습니다. 타이머에
+          의해 일정 시간 간격으로 계속 반복 실행되는 <Code code={'handleTick'}/> 함수는 매번
+          {' '}<Code code={'nextWorld'}/>를 이용해 새 <DataType World />를 만든 뒤
+          그것을 기존의 World와 교체하고 있습니다.
+        </Paragraph>
+      </Right>
+    </div>
+
+    <div style={{ display: 'flex' }}>
+      <Left>
+        <StickyContainer margin={'5.5em 0 1.5em'}>
+          <ControllableHeadFigure />
+        </StickyContainer>
+      </Left>
+
+      <Right>
+        <H3 number={'4.2'} text={'방향을 바꾸는 뱀'} />
+
+        <Paragraph>
+          뱀의 다음 위치는 현재 진행 방향에 따라 결정되고 있습니다. 이제 플레이어가 마음대로 뱀을
+          조작할 수 있도록 방향과 관련된 다른 <DataType text={'Action'}/>들을 처리하겠습니다.
+          현재 우리는 <Code code={'tick'}/> 하나의 <DataType text={'Action'}/>만
+          정의해 놓고 있는 상태입니다. 네 방향에 대해 모두 별도로, 총 네 개의{' '}
+          <DataType text={'Action'}/>을 추가합니다.
+        </Paragraph>
+
+        <Snippet
+          code={
+            `\
+// An Action is one of:
+//   - 'tick'
+//   - 'up'
+//   - 'down'
+//   - 'left'
+//   - 'right'`
           }
         />
       </Right>

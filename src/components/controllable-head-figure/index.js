@@ -1,5 +1,4 @@
 import React from 'react'
-import random from 'lodash.random'
 
 // =============================================================================
 // Constants
@@ -241,7 +240,7 @@ const isSamePosition = (posn1, posn2) =>
 // Main
 // =============================================================================
 
-class MovingHeadFigure extends React.Component {
+class ControllableHeadFigure extends React.Component {
   // intervalID :: number
   intervalID = 0
 
@@ -250,20 +249,20 @@ class MovingHeadFigure extends React.Component {
 
   // componentWillUnmount :: -> void
   componentWillUnmount () {
-    // this.uninstallKeyHandler()
+    this.uninstallKeyHandler()
     this.uninstallTimer()
   }
 
   // componentDidUpdate :: object * World -> void
   componentDidUpdate (prevProps, prevState) {
     if (prevState.status !== 2 && this.state.status === 2) {
-      // this.uninstallKeyHandler()
+      this.uninstallKeyHandler()
       this.uninstallTimer()
     } else if (prevState.status !== 1 && this.state.status === 1) {
-      // this.installKeyHandler()
+      this.installKeyHandler()
       this.installTimer()
     } else if (prevState.status !== 0 && this.state.status === 0) {
-      // this.uninstallKeyHandler()
+      this.uninstallKeyHandler()
       this.uninstallTimer()
     }
   }
@@ -365,7 +364,7 @@ class MovingHeadFigure extends React.Component {
               fontSize: '0.9em',
             }}
           >
-            움직이는 뱀
+            방향키로 조작할 수 있는 뱀
           </p>
         {/*</div>*/}
       </>
@@ -549,4 +548,4 @@ const PositionComponent = ({ x, y, food = false }) => (
   />
 )
 
-export default MovingHeadFigure
+export default ControllableHeadFigure
