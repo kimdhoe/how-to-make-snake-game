@@ -18,6 +18,7 @@ import * as snippets from '../../../snippets'
 import ConstantsFigure from '../../constants-figure'
 import StateFigure from '../../state-figure'
 import EmptySceneFigure from '../../empty-scene-figure'
+import HeadSceneFigure from '../../head-scene-figure'
 
 const Chapter02 = ({ title, title1 }) => (
   <Chapter number={2} title={'데이터'}>
@@ -285,10 +286,10 @@ const position = (x, y) => ({ x, y })`
           number={'2.2.마'}
           text={(
             <>
-              샘플{' '}
               <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
                 World
               </span>
+              {' '}예시
             </>
           )}
         />
@@ -435,29 +436,37 @@ const Scene = world => (
       </Right>
     </div>
 
-    <H4
-      number={'2.3.나'}
-      text={(
-        <span
-          css={{
-            fontFamily: `Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", "Courier New", Courier, monospace`,
-          }}
-        >
-          {'<Snake />'}
-        </span>
-      )}
-    />
+    <div style={{ display: 'flex' }}>
+      <Left>
+        <StickyContainer margin={'5.5em 0 1.5em'}>
+          <HeadSceneFigure />
+        </StickyContainer>
+      </Left>
 
-    <Paragraph>
-      뱀을 표시하는 것도 방금 무대를 표시했던 것과 크게 다르지 않습니다. 상태값에 영향을 받지 않는
-      무대는 상수만으로 그릴 수 있었던 반면, 뱀은 상태값이 필요하다는 차이점이 있긴 하지만요. 이번에도
-      무대를 그릴 때 했던 것처럼, 있었으면 하는 <Code code={'Snake'}/> 컴포넌트를 먼저 한 번
-      상상해보겠습니다.
-    </Paragraph>
+      <Right>
+        <H4
+          number={'2.3.나'}
+          text={(
+            <span
+              css={{
+                fontFamily: `Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", "Courier New", Courier, monospace`,
+              }}
+            >
+              {'<Snake />'}
+            </span>
+          )}
+        />
 
-    <Snippet
-      code={
-        `\
+        <Paragraph>
+          뱀을 표시하는 것도 방금 무대를 표시했던 것과 크게 다르지 않습니다. 상태값에 영향을 받지 않는
+          무대는 상수만으로 그릴 수 있었던 반면, 뱀은 상태값이 필요하다는 차이점이 있긴 하지만요. 이번에도
+          무대를 그릴 때 했던 것처럼, 있었으면 하는 <Code code={'Snake'}/> 컴포넌트를 먼저 한 번
+          상상해보겠습니다.
+        </Paragraph>
+
+        <Snippet
+          code={
+            `\
 // World -> ReactElement
 const Scene = world => (
   <div
@@ -474,20 +483,20 @@ const Scene = world => (
 
 // Snake -> ReactElement
 const Snake = snake => <div></div>`
-      }
-    />
+          }
+        />
 
-    <Paragraph>
-      희망사항을 코드로 구현해봅시다.{' '}
-      <Code code={'Snake'}/> 컴포넌트는 입력 받은 <Code code={'snake'}/>의
-      <Code code={'position'}/> 값을 이용해 무대 위의 해당 위치에 뱀을 표시하는 역할을 합니다.
-      {' '}<Code code={'position.x'}/> 값으로 무대 왼쪽으로부터 거리,{' '}
-      <Code code={'position.y'}/> 값으로 무대 위쪽으로부터의 거리를 계산할 수 있습니다.
-    </Paragraph>
+        <Paragraph>
+          희망사항을 코드로 구현해봅시다.{' '}
+          <Code code={'Snake'}/> 컴포넌트는 입력 받은 <Code code={'snake'}/>의
+          <Code code={'position'}/> 값을 이용해 무대 위의 해당 위치에 뱀을 표시하는 역할을 합니다.
+          {' '}<Code code={'position.x'}/> 값으로 무대 왼쪽으로부터 거리,{' '}
+          <Code code={'position.y'}/> 값으로 무대 위쪽으로부터의 거리를 계산할 수 있습니다.
+        </Paragraph>
 
-    <Snippet
-      code={
-        `\
+        <Snippet
+          code={
+            `\
 // Snake -> ReactElement
 const Snake = snake => (
   <div
@@ -503,8 +512,10 @@ const Snake = snake => (
   >
   </div>
 )`
-      }
-    />
+          }
+        />
+      </Right>
+    </div>
 
     <H3 number={'2.4'} text={'액션'} />
 
