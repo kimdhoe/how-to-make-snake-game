@@ -7,7 +7,7 @@ const StickyContainer = ({ children, margin }) => (
       top: 50,
     }}
     style={{
-      margin: margin || '75px 0 150px',
+      margin: margin || '4.5em 0 4em',
     }}
   >
     {children}

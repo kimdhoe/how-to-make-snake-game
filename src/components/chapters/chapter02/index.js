@@ -19,8 +19,9 @@ import {
   Right,
   StickyContainer,
 } from '../shared'
-import { Game } from '../../../components'
+import { ConsantsFigure } from '../../../components'
 import * as snippets from '../../../snippets'
+import ConstantsFigure from '../../constants-figure'
 
 const Chapter02 = ({ title, title1 }) => (
   <Chapter number={2} title={'데이터'}>
@@ -46,8 +47,8 @@ const Chapter02 = ({ title, title1 }) => (
 
     <div style={{ display: 'flex' }}>
       <Left>
-        <StickyContainer margin={'5.5em 0 0'}>
-          <Game />
+        <StickyContainer margin={'5.5em 0 1.5em'}>
+          <ConstantsFigure />
         </StickyContainer>
       </Left>
 
