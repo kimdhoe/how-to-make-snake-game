@@ -18,7 +18,8 @@ import * as snippets from '../../../snippets'
 import ConstantsFigure from '../../constants-figure'
 import StateFigure from '../../state-figure'
 import EmptySceneFigure from '../../empty-scene-figure'
-import HeadSceneFigure from '../../head-scene-figure'
+import StillHeadFigure from '../../still-head-figure'
+import MovingHeadFigure from '../../moving-head-figure'
 
 const Chapter02 = ({ title, title1 }) => (
   <Chapter number={2} title={'데이터'}>
@@ -439,7 +440,7 @@ const Scene = world => (
     <div style={{ display: 'flex' }}>
       <Left>
         <StickyContainer margin={'5.5em 0 1.5em'}>
-          <HeadSceneFigure />
+          <StillHeadFigure />
         </StickyContainer>
       </Left>
 
@@ -517,37 +518,45 @@ const Snake = snake => (
       </Right>
     </div>
 
-    <H3 number={'2.4'} text={'액션'} />
+    <div style={{ display: 'flex' }}>
+      <Left>
+        <StickyContainer margin={'5.5em 0 1.5em'}>
+          <MovingHeadFigure />
+        </StickyContainer>
+      </Left>
 
-    <Paragraph>
-      아직까지 뱀은 가만히 멈춰있습니다. 그 이유는 <DataType text={'World'}/>에 아무런 변동이
-      없기 때문입니다. 이 게임에서 뱀은 일정 시간 간격으로 앞으로 한 칸씩 전진해야 하므로, 계속해서
-      상태를 업데이트시켜 줄 필요가 있습니다. 아이디어는 간단합니다. 일정 시간 간격으로 뱀의 위치가
-      업데이트된 새로운 <DataType text={'World'}/>를 만들어, 그걸로 기존{' '}
-      <DataType text={'World'}/>를 교체하는 것입니다. 좀 전에 우리가 만든{' '}
-      <Code code={'Scene'}/> 컴포넌트에게 새 <DataType text={'World'}/>만 넘겨주면
-      화면을 갱신하는 일은 알아서 해 줄 겁니다. 마치 스톱 모션 애니메이션처럼 말이죠.
-    </Paragraph>
+      <Right>
+        <H3 number={'2.4'} text={'액션'} />
 
-    <Paragraph>
-      일정 시간 간격이 지나 뱀이 앞으로 한 칸 움직여야 할 때, 기존 World 데이터를 바탕으로 뱀의
-      위치가 업데이트된 새로운 <DataType text={'World'}/>를 만들 수 있습니다. 이걸 그대로{' '}
-      <Code code={'nextWorld'}/>라는 함수로 표현해볼까요? (<Code code={'nextSnake'}/>는
-      희망사항입니다.)
-    </Paragraph>
+        <Paragraph>
+          아직까지 뱀은 가만히 멈춰있습니다. 그 이유는 <DataType text={'World'}/>에 아무런 변동이
+          없기 때문입니다. 이 게임에서 뱀은 일정 시간 간격으로 앞으로 한 칸씩 전진해야 하므로, 계속해서
+          상태를 업데이트시켜 줄 필요가 있습니다. 아이디어는 간단합니다. 일정 시간 간격으로 뱀의 위치가
+          업데이트된 새로운 <DataType text={'World'}/>를 만들어, 그걸로 기존{' '}
+          <DataType text={'World'}/>를 교체하는 것입니다. 좀 전에 우리가 만든{' '}
+          <Code code={'Scene'}/> 컴포넌트에게 새 <DataType text={'World'}/>만 넘겨주면
+          화면을 갱신하는 일은 알아서 해 줄 겁니다. 마치 스톱 모션 애니메이션처럼 말이죠.
+        </Paragraph>
 
-    <Snippet
-      hideFilename
-      code={
-        `\
+        <Paragraph>
+          일정 시간 간격이 지나 뱀이 앞으로 한 칸 움직여야 할 때, 기존 World 데이터를 바탕으로 뱀의
+          위치가 업데이트된 새로운 <DataType text={'World'}/>를 만들 수 있습니다. 이걸 그대로{' '}
+          <Code code={'nextWorld'}/>라는 함수로 표현해볼까요? (<Code code={'nextSnake'}/>는
+          희망사항입니다.)
+        </Paragraph>
+
+        <Snippet
+          hideFilename
+          code={
+            `\
 // An Action is one of:
 //   - 'tick'`
-      }
-    />
+          }
+        />
 
-    <Snippet
-      code={
-        `\
+        <Snippet
+          code={
+            `\
 // World * Action -> World
 const nextWorld = (oldWorld, action) => {
   if (action === 'tick') {
@@ -560,53 +569,53 @@ const nextWorld = (oldWorld, action) => {
 // Snake * Action -> Snake
 // (wish list)
 const nextSnake = (snake, action) => snake`
-      }
-    />
+          }
+        />
 
-    <Paragraph>
-      우리는 게임의 상태, <DataType text={'World'}/>를 어떤 식으로든 변경하려고 할 때마다 매번
-      변경사항이 적용된 새로운{' '} <DataType text={'World'}/>를 만들 것입니다. 이렇게
-      만들어진 새로운{' '} <DataType text={'World'}/>를 기존의
-      <DataType text={'World'}/>와 바꿔치기하는 것으로 상태 변경의 한 사이클이 끝납니다. 위의
-      {' '}<Code code={'nextWorld'}/>는 상태 변경이 필요한 매 순간마다 새 상태를 만들어내기 위해
-      호출될 함수입니다.
-    </Paragraph>
+        <Paragraph>
+          우리는 게임의 상태, <DataType text={'World'}/>를 어떤 식으로든 변경하려고 할 때마다 매번
+          변경사항이 적용된 새로운{' '} <DataType text={'World'}/>를 만들 것입니다. 이렇게
+          만들어진 새로운{' '} <DataType text={'World'}/>를 기존의
+          <DataType text={'World'}/>와 바꿔치기하는 것으로 상태 변경의 한 사이클이 끝납니다. 위의
+          {' '}<Code code={'nextWorld'}/>는 상태 변경이 필요한 매 순간마다 새 상태를 만들어내기 위해
+          호출될 함수입니다.
+        </Paragraph>
 
-    <Paragraph>
-      하지만 기존 <DataType text={'World'}/>의 정보만으로는 새로운{' '}
-      <DataType text={'World'}/>를 만들어내기에 충분하지 않습니다.{' '}
-      변경의 의도를 알아야 <DataType text={'World'}/>의 어떤 부분을 어떻게 바꿀 수 있을지 결정할
-      수 있겠죠? 예를 들면 일정 시간 간격이 지났으니 뱀이 한 칸 앞으로 움직여야 한다던가 하는 식으로요.
-    </Paragraph>
+        <Paragraph>
+          하지만 기존 <DataType text={'World'}/>의 정보만으로는 새로운{' '}
+          <DataType text={'World'}/>를 만들어내기에 충분하지 않습니다.{' '}
+          변경의 의도를 알아야 <DataType text={'World'}/>의 어떤 부분을 어떻게 바꿀 수 있을지 결정할
+          수 있겠죠? 예를 들면 일정 시간 간격이 지났으니 뱀이 한 칸 앞으로 움직여야 한다던가 하는 식으로요.
+        </Paragraph>
 
-    <Paragraph>
-      위의 <Code code={'nextWorld'}/> 함수 정의를 보면 기존 <DataType text={'World'}/>
-      {' '}외에 <Code code={'action'}/>이라는 인자를 같이 받도록 되어 있는데, 이 값은 상태
-      변경에 대한 의도를 담고 있습니다. 액션을 통해 우리는 기존의 상태에 어떤 변경사항을 적용해서 새
-      상태를 만들어내야 할지를 결정할 수 있습니다. 뱀 게임 세계에는 상태를 업데이트시키는 요인이 크게
-      두 가지가 있습니다.
-    </Paragraph>
+        <Paragraph>
+          위의 <Code code={'nextWorld'}/> 함수 정의를 보면 기존 <DataType text={'World'}/>
+          {' '}외에 <Code code={'action'}/>이라는 인자를 같이 받도록 되어 있는데, 이 값은 상태
+          변경에 대한 의도를 담고 있습니다. 액션을 통해 우리는 기존의 상태에 어떤 변경사항을 적용해서 새
+          상태를 만들어내야 할지를 결정할 수 있습니다. 뱀 게임 세계에는 상태를 업데이트시키는 요인이 크게
+          두 가지가 있습니다.
+        </Paragraph>
 
-    <ul>
-      <li>
-        시간의 경과
-      </li>
-      <li>
-        방향키 입력에 따른 진행 방향 변경
-      </li>
-    </ul>
+        <ul>
+          <li>
+            시간의 경과
+          </li>
+          <li>
+            방향키 입력에 따른 진행 방향 변경
+          </li>
+        </ul>
 
-    <Paragraph>
-      여기서는 <Code code={'tick'}/>이라는 액션에 대해서만 새로운 상태를 만들어 반환하고 있는데,
-      이 액션의 의도는 일정 시간의 경과에 따라 뱀의 위치가 업데이트된 새로운 상태를 만들어내는 것입니다.
-      {' '}<Code code={'tick'}/> 액션이 발생할 때마다 뱀의 상태를 업데이트해 줄 수 있도록{' '}
-      <Code code={'nextSnake'}/> 함수를 완성해 볼까요? 뱀의 위치와 방향을 다루는 게 이 게임의
-      핵심인 만큼 이 함수의 역할이 큽니다.
-    </Paragraph>
+        <Paragraph>
+          여기서는 <Code code={'tick'}/>이라는 액션에 대해서만 새로운 상태를 만들어 반환하고 있는데,
+          이 액션의 의도는 일정 시간의 경과에 따라 뱀의 위치가 업데이트된 새로운 상태를 만들어내는 것입니다.
+          {' '}<Code code={'tick'}/> 액션이 발생할 때마다 뱀의 상태를 업데이트해 줄 수 있도록{' '}
+          <Code code={'nextSnake'}/> 함수를 완성해 볼까요? 뱀의 위치와 방향을 다루는 게 이 게임의
+          핵심인 만큼 이 함수의 역할이 큽니다.
+        </Paragraph>
 
-    <Snippet
-      code={
-        `\
+        <Snippet
+          code={
+            `\
 // Snake * Action -> Snake
 const nextSnake = (snake, action) => {
   if (action === 'tick') {
@@ -620,8 +629,10 @@ const nextSnake = (snake, action) => {
 
   return snake
 }`
-      }
-    />
+          }
+        />
+      </Right>
+    </div>
   </Chapter>
 )
 

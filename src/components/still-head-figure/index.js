@@ -1,6 +1,6 @@
 import React from 'react'
 
-const HeadSceneFigure = () => (
+const StillHeadFigure = () => (
   <div>
     <div
       css={{
@@ -31,9 +31,9 @@ const HeadSceneFigure = () => (
         fontSize: '0.9em',
       }}
     >
-      머리만 있는 뱀
+      멈춰있는 뱀
     </p>
   </div>
 )
 
-export default HeadSceneFigure
+export default StillHeadFigure
