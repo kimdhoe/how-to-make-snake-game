@@ -19,7 +19,10 @@ import {
   Right,
   StickyContainer,
 } from '../shared'
-import { ConsantsFigure } from '../../../components'
+import {
+  ConsantsFigure,
+  StateFigure,
+} from '../../../components'
 import * as snippets from '../../../snippets'
 import ConstantsFigure from '../../constants-figure'
 
@@ -110,32 +113,40 @@ const INTERVAL = 500
 
         <Paragraph>
           길이와 관련된 값들은 게임 무대의 가로와 세로가 각각 스무 칸인 정사각형이어야 한다는 임의의
-          결정을 전제로 정의되었습니다. 그래서 무대의 가로 길이와 세로 길이가 하나의 동일한 값으로 표현되었고,{' '}
-          <Code code={'CELL_SIZE'}/>는 <Code code={'SCENE_SIZE'}/> 500을 20으로 나눈
-          값이 되었습니다.
+          결정을 전제로 정의되었습니다. 그래서 무대의 가로 길이와 세로 길이가 하나의 동일한 값으로
+          표현되었고,{' '} <Code code={'CELL_SIZE'}/>는 <Code code={'SCENE_SIZE'}/>
+          {' '}500을 20으로 나눈 값이 되었습니다.
         </Paragraph>
       </Right>
     </div>
 
-    <H3 number={'2.2'} text={'변하는 것'} />
+    <div style={{ display: 'flex' }}>
+      <Left>
+        <StickyContainer margin={'5.5em 0 1.5em'}>
+          <StateFigure />
+        </StickyContainer>
+      </Left>
 
-    <Paragraph>
-      변화하는 데이터들은 게임의{' '}
-      <Important text={'상태'}/><InterestingWord very text={'State'} />가 됩니다.
-      앞서 그림을 보면서 찾아낸 상태 데이터는 총 네 개가 있었습니다. 하지만 우리는 지금 머리 하나만
-      움직여볼 생각이기 때문에 뱀의 길이와 먹이의 위치는 제외하고, 뱀의 위치와 뱀의 진행 방향 데이터만
-      생각하겠습니다.
-    </Paragraph>
-    <Paragraph>
-      한 칸짜리 뱀만 존재하는 이 게임 세계의 상태를 아래처럼{' '} <DataType text={'World'} />
-      라는 형식의 객체로 표현할 수 있습니다.
-    </Paragraph>
+      <Right>
+        <H3 number={'2.2'} text={'변하는 것'} />
 
-    <Snippet
-      startingLineNumber={35}
-      changed={[ 35, 77 ]}
-      code={
-        `\
+        <Paragraph>
+          변화하는 데이터들은 게임의{' '}
+          <Important text={'상태'}/><InterestingWord very text={'State'}/>가
+          됩니다. 앞서 그림을 보면서 찾아낸 상태 데이터는 총 네 개가 있었습니다. 하지만 우리는 지금
+          머리 하나만 움직여볼 것이기 때문에 뱀의 길이와 먹이의 위치는 제외하고, 뱀의 위치와 뱀의 진행
+          방향 데이터만 생각하겠습니다.
+        </Paragraph>
+        <Paragraph>
+          한 칸짜리 뱀만 존재하는 이 게임 세계의 상태를 아래처럼{' '}
+          <DataType text={'World'}/>라는 형식의 객체로 표현할 수 있습니다.
+        </Paragraph>
+
+        <Snippet
+          startingLineNumber={35}
+          changed={[ 35, 77 ]}
+          code={
+            `\
 // ===========================
 // Data Definitions
 // ===========================
@@ -179,125 +190,126 @@ const snake = (position, direction) => ({ position, direction })
 // number * number -> Position
 // Given x and y coordinates, produces a position.
 const position = (x, y) => ({ x, y })`
-      }
-    >
-    </Snippet>
+          }
+        >
+        </Snippet>
 
-    <Paragraph>
-      위의 코드에서는 주석을 통해 게임 상태를 표현하는 데이터 형식들을 정의하고 있습니다. (이
-      튜토리얼에서는 주석도 프로그램의 일부로 보아주기 바랍니다.)
-    </Paragraph>
+        <Paragraph>
+          위의 코드에서는 주석을 통해 게임 상태를 표현하는 데이터 형식들을 정의하고 있습니다. (이
+          튜토리얼에서는 주석도 프로그램의 일부로 보아주기 바랍니다.)
+        </Paragraph>
 
-    <H4
-      number={'2.2.가'}
-      text={(
-        <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
-          World
-        </span>
-      )}
-    />
+        <H4
+          number={'2.2.가'}
+          text={(
+            <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
+              World
+            </span>
+          )}
+        />
 
-    <Paragraph>
-      먼저 게임의 전체 상태를 표현하는{' '}
-      <DataType text={'World'}/>는 한 개의 필드를 가진 객체로 정의합니다. 이 데이터 형식 안에
-      게임에 필요한 모든 상태 정보가 들어가야 합니다.
-    </Paragraph>
+        <Paragraph>
+          먼저 게임의 전체 상태를 표현하는{' '}
+          <DataType text={'World'}/>는 한 개의 필드를 가진 객체로 정의합니다. 이 데이터 형식 안에
+          게임에 필요한 모든 상태 정보가 들어가야 합니다.
+        </Paragraph>
 
-    <ul>
-      <li>
-        <Code code={'snake'}/>: 뱀의 상태 (머리의 위치, 방향)
-      </li>
-    </ul>
+        <ul>
+          <li>
+            <Code code={'snake'}/>: 뱀의 상태 (머리의 위치, 방향)
+          </li>
+        </ul>
 
-    <Paragraph>
-      다음으로 <DataType text={'World'}/>를 구성하는 데에 필요한 나머지 데이터 형식들을 정의합니다.
-    </Paragraph>
+        <Paragraph>
+          다음으로 <DataType text={'World'}/>를 구성하는 데에 필요한 나머지 데이터 형식들을 정의합니다.
+        </Paragraph>
 
-    <H4
-      number={'2.2.나'}
-      text={(
-        <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
-          Snake
-        </span>
-      )}
-    />
+        <H4
+          number={'2.2.나'}
+          text={(
+            <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
+              Snake
+            </span>
+          )}
+        />
 
-    <Paragraph>
-      뱀의 상태를 표현하는 <DataType text={'Snake'}/>는 각각 위치와 방향 정보를 나타내는 두 개의
-      필드를 가진 객체로 정의합니다. 이 두 개의 정보가 있으면 우리는 무대에 뱀을 어떻게 배치할지 판단할
-      수 있습니다.
-    </Paragraph>
+        <Paragraph>
+          뱀의 상태를 표현하는 <DataType text={'Snake'}/>는 각각 위치와 방향 정보를 나타내는 두 개의
+          필드를 가진 객체로 정의합니다. 이 두 개의 정보가 있으면 우리는 무대에 뱀을 어떻게 배치할지 판단할
+          수 있습니다.
+        </Paragraph>
 
-    <ul>
-      <li>
-        <Code code={'position'}/>: 뱀 머리의 위치
-      </li>
-      <li>
-        <Code code={'direction'}/>: 뱀의 진행 방향
-      </li>
-    </ul>
+        <ul>
+          <li>
+            <Code code={'position'}/>: 뱀 머리의 위치
+          </li>
+          <li>
+            <Code code={'direction'}/>: 뱀의 진행 방향
+          </li>
+        </ul>
 
-    <H4
-      number={'2.2.다'}
-      text={(
-        <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
+        <H4
+          number={'2.2.다'}
+          text={(
+            <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
           Position
         </span>
-      )}
-    />
+          )}
+        />
 
-    <Paragraph>
-      위치를 표현하는 <DataType text={'Position'}/>은 각각 해당 좌표를 나타내는{' '}
-      <Code code={'x'}/>, <Code code={'y'}/> 필드를 가진 객체입니다.{' '} 우리는 게임
-      무대에 놓일 뱀의 몸통을 단순한 좌표값으로 보고 있습니다.
-    </Paragraph>
+        <Paragraph>
+          위치를 표현하는 <DataType text={'Position'}/>은 각각 해당 좌표를 나타내는{' '}
+          <Code code={'x'}/>, <Code code={'y'}/> 필드를 가진 객체입니다.{' '} 우리는 게임
+          무대에 놓일 뱀의 몸통을 단순한 좌표값으로 보고 있습니다.
+        </Paragraph>
 
-    <ul>
-      <li>
-        <Code code={'x'}/>: <InterestingWord text={'x'}/> 좌표
-      </li>
-      <li>
-        <Code code={'y'}/>: <InterestingWord text={'y'}/> 좌표
-      </li>
-    </ul>
+        <ul>
+          <li>
+            <Code code={'x'}/>: <InterestingWord text={'x'}/> 좌표
+          </li>
+          <li>
+            <Code code={'y'}/>: <InterestingWord text={'y'}/> 좌표
+          </li>
+        </ul>
 
-    <H4
-      number={'2.2.라'}
-      text={(
-        <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
-          Direction
-        </span>
-      )}
-    />
+        <H4
+          number={'2.2.라'}
+          text={(
+            <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
+              Direction
+            </span>
+          )}
+        />
 
-    <Paragraph>
-      방향을 표현하는 <DataType text={'Direction'}/>은{' '}
-      <Code code={"'up'"}/>, <Code code={"'down'"}/>, <Code code={"'left'"}/>,
-      <Code code={"'right'"}/> 네 개 중 하나의 값을 갖습니다.
-    </Paragraph>
+        <Paragraph>
+          방향을 표현하는 <DataType text={'Direction'}/>은{' '}
+          <Code code={"'up'"}/>, <Code code={"'down'"}/>,{' '}
+          <Code code={"'left'"}/>,{' '}
+          <Code code={"'right'"}/> 네 개 중 하나의 값을 갖습니다.
+        </Paragraph>
 
-    <H4
-      number={'2.2.마'}
-      text={(
-        <>
-          샘플{' '}
-          <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
-            World
-          </span>
-        </>
-      )}
-    />
+        <H4
+          number={'2.2.마'}
+          text={(
+            <>
+              샘플{' '}
+              <span css={{ fontFamily: 'Georgia', fontStyle: 'italic' }}>
+                World
+              </span>
+            </>
+          )}
+        />
 
-    <Paragraph>
-      데이터 정의와 설명이 복잡하게 보였다면 코드로 <DataType text={'World'}/>의 예시값을
-      한 번 만들어볼까요?
-    </Paragraph>
+        <Paragraph>
+          데이터 정의와 설명이 복잡하게 보였다면 코드로 <DataType text={'World'}/>의 예시값을
+          한 번 만들어볼까요?
+        </Paragraph>
 
-    <Snippet
-      hideFilename
-      showLineNumbers={false}
-      code={
-        `\
+        <Snippet
+          hideFilename
+          showLineNumbers={false}
+          code={
+            `\
 // Snake
 const exampleSnake = snake(position(5, 7), 'right')
 
@@ -313,16 +325,19 @@ const exampleWorld = world(exampleSnake)
 //       },
 //     }
 `
-      }
-    />
+          }
+        />
 
-    <Paragraph>
-      우리가 시도 중인 초기 버전 게임에서, 어느 한 시점의 상태는 두 줄만으로 간단하게 표현이 됩니다. 뱀은
-      왼쪽으로부터 여섯 번째, 위쪽으로부터 여덟 번째 칸에 위치해있고, 진행 방향은 오른쪽입니다. 이
-      상태값으로 판단해보면 뱀의 다음 위치는 <Code code={'(6, 7)'}/>이 되겠죠?
-    </Paragraph>
+        <Paragraph>
+          우리가 시도 중인 초기 버전 게임에서, 어느 한 시점의 상태는 두 줄만으로 간단하게 표현이 됩니다. 뱀은
+          왼쪽으로부터 여섯 번째, 위쪽으로부터 여덟 번째 칸에 위치해있고, 진행 방향은 오른쪽입니다. 이
+          상태값으로 판단해보면 뱀의 다음 위치는 <Code code={'(6, 7)'}/>이 되겠죠?
+        </Paragraph>
 
-    <H3 number={2.3} text={'뱀 그림'} />
+      </Right>
+    </div>
+
+    <H3 number={2.3} text={'뱀 그림'}/>
 
     <Paragraph>
       지금까지 상태 데이터들의 형식을 정의했습니다. 이제 렌더링, 즉 표현을 고민해 볼
