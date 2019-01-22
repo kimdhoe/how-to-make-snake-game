@@ -15,11 +15,15 @@ import {
   Code,
   Snippet,
   DataType,
+  Left,
+  Right,
+  StickyContainer,
 } from '../shared'
+import { Game } from '../../../components'
 import * as snippets from '../../../snippets'
 
 const Chapter02 = ({ title, title1 }) => (
-  <Chapter number={2} title={'머리만 있는 뱀'}>
+  <Chapter number={2} title={'데이터'}>
     <Paragraph>
       프로그램을 만들려면 프로그램에 존재하는 요소들의 데이터를 코드로 표현해야 합니다. 그러기 위해서
       게임 상에서 <Important text={'변하지 않는 정보'}/>
@@ -40,23 +44,31 @@ const Chapter02 = ({ title, title1 }) => (
       동일하지 않고, 먹이의 위치도 제각각입니다.
     </Paragraph>
 
-    <H3 number={'2.1'} text={'변하지 않는 것'} />
+    <div style={{ display: 'flex' }}>
+      <Left>
+        <StickyContainer margin={'5.5em 0 0'}>
+          <Game />
+        </StickyContainer>
+      </Left>
 
-    <Paragraph>
-      우선 변하지 않는 것들의 값을 <Important text={'상수'}/>
-      <InterestingWord very text={'Constants'}/>로 정의합니다. 이 상수들을 정의하기 위해
-      다음과 같은 무대의 성질을 임의로 정합니다.
-    </Paragraph>
+      <Right>
+        <H3 number={'2.1'} text={'변하지 않는 것'} />
 
-    <ul>
-      <li>게임 무대는 정사각형이다.</li>
-      <li>게임 무대의 가로/세로는 각각 스무칸 씩이다.</li>
-    </ul>
+        <Paragraph>
+          우선 변하지 않는 것들의 값을 <Important text={'상수'}/>
+          <InterestingWord very text={'Constants'}/>로 정의합니다. 이 상수들을 정의하기 위해
+          다음과 같은 무대의 성질을 임의로 정합니다.
+        </Paragraph>
 
-    <Snippet
-      startingLineNumber={3}
-      changed={[ 3, 33 ]}
-      code={`\
+        <ul>
+          <li>게임 무대는 정사각형이다.</li>
+          <li>게임 무대의 가로/세로는 각각 스무칸 씩이다.</li>
+        </ul>
+
+        <Snippet
+          startingLineNumber={3}
+          changed={[ 3, 33 ]}
+          code={`\
 // ===========================
 // Constants
 // ===========================
@@ -93,14 +105,16 @@ const CELL_SIZE = 25
 // 뱀 이동 시간 간격 (단위: ms)
 const INTERVAL = 500
 `}
-    />
+        />
 
-    <Paragraph>
-      길이와 관련된 값들은 게임 무대의 가로와 세로가 각각 스무 칸인 정사각형이어야 한다는 임의의
-      결정을 전제로 정의되었습니다. 그래서 무대의 가로 길이와 세로 길이가 하나의 동일한 값으로 표현되었고,{' '}
-      <Code code={'CELL_SIZE'}/>는 <Code code={'SCENE_SIZE'}/> 500을 20으로 나눈
-      값이 되었습니다.
-    </Paragraph>
+        <Paragraph>
+          길이와 관련된 값들은 게임 무대의 가로와 세로가 각각 스무 칸인 정사각형이어야 한다는 임의의
+          결정을 전제로 정의되었습니다. 그래서 무대의 가로 길이와 세로 길이가 하나의 동일한 값으로 표현되었고,{' '}
+          <Code code={'CELL_SIZE'}/>는 <Code code={'SCENE_SIZE'}/> 500을 20으로 나눈
+          값이 되었습니다.
+        </Paragraph>
+      </Right>
+    </div>
 
     <H3 number={'2.2'} text={'변하는 것'} />
 
@@ -568,7 +582,7 @@ const nextSnake = (snake, action) => {
   if (action === 'tick') {
     return snake(
       position(
-        
+
       ),
       snake.direction,
     )
