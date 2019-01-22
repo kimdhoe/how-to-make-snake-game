@@ -113,7 +113,6 @@ const Segment = ({ x, y, food }) => (
       left: `${y * 5}%`,
       width: '5%',
       height: '5%',
-      borderRadius: '50%',
       backgroundColor: food ? '#ff8787' : '#5c940d',
     }}
   />
