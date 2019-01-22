@@ -1,15 +1,10 @@
 import React from 'react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import {
-  base16AteliersulphurpoolLight,
-} from 'react-syntax-highlighter/dist/styles/prism'
 
 import {
   Chapter,
   Paragraph,
   Important,
   InterestingWord,
-  BoringWord,
   H3,
   H4,
   Code,
@@ -19,12 +14,10 @@ import {
   Right,
   StickyContainer,
 } from '../shared'
-import {
-  ConsantsFigure,
-  StateFigure,
-} from '../../../components'
 import * as snippets from '../../../snippets'
 import ConstantsFigure from '../../constants-figure'
+import StateFigure from '../../state-figure'
+import EmptySceneFigure from '../../empty-scene-figure'
 
 const Chapter02 = ({ title, title1 }) => (
   <Chapter number={2} title={'데이터'}>
@@ -347,31 +340,39 @@ const exampleWorld = world(exampleSnake)
       <InterestingWord text={'React'}/> 컴포넌트로 넘겨주는 것입니다.
     </Paragraph>
 
-    <H4
-      number={'2.3.가'}
-      text={(
-        <span
-          css={{
-            fontFamily: `Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", "Courier New", Courier, monospace`,
-          }}
-        >
-          {'<Scene />'}
-        </span>
-      )}
-    />
+    <div style={{ display: 'flex' }}>
+      <Left>
+        <StickyContainer margin={'5.5em 0 1.5em'}>
+          <EmptySceneFigure />
+        </StickyContainer>
+      </Left>
 
-    <Paragraph>
-      아직 렌더링 관련 코드는 하나도 쓰지 않았지만, 조금 앞서나가서 <DataType text={'World'}/>
-      {' '}데이터를 넘겨주면 화면에 게임 무대를 표시하는 <Code code={'Scene'}/> 컴포넌트가 이미
-      있다고 한 번 생각해볼까요? 이 컴포넌트에 변화하는 상태 데이터를 계속해서 넘겨주기만 하면
-      데이터를 반영하도록 화면이 갱신될 겁니다. 희망사항을 반영해서 코드를 써 보면 다음과 같습니다.
-    </Paragraph>
+      <Right>
+        <H4
+          number={'2.3.가'}
+          text={(
+            <span
+              css={{
+                fontFamily: `Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", "Courier New", Courier, monospace`,
+              }}
+            >
+              {'<Scene />'}
+            </span>
+          )}
+        />
 
-    <Snippet
-      hideFilename
-      startingLineNumber={79}
-      code={
-        `\
+        <Paragraph>
+          아직 렌더링 관련 코드는 하나도 쓰지 않았지만, 조금 앞서나가서 <DataType text={'World'}/>
+          {' '}데이터를 넘겨주면 화면에 게임 무대를 표시하는 <Code code={'Scene'}/> 컴포넌트가 이미
+          있다고 한 번 생각해볼까요? 이 컴포넌트에 변화하는 상태 데이터를 계속해서 넘겨주기만 하면
+          데이터를 반영하도록 화면이 갱신될 겁니다. 희망사항을 반영해서 코드를 써 보면 다음과 같습니다.
+        </Paragraph>
+
+        <Snippet
+          hideFilename
+          startingLineNumber={79}
+          code={
+            `\
 // Snake
 // 뱀의 최초 상태
 const initialSnake = snake(position(10, 10)), 'right')
@@ -397,22 +398,22 @@ const Scene = world => (
   <div>
   </div>
 )`
-      }
-    />
+          }
+        />
 
-    <Paragraph>
-      우선 뱀의 위치는 화면 중앙이고 진행 방향은 오른쪽인 <Code code={'initialWorld'}/>를 만든
-      다음, <Code code={'Game'}/> 컴포넌트의 <InterestingWord text={'state'}/>로
-      배정했습니다. 이 <InterestingWord text={'state'}/>가 바뀔 때마다 아래 쪽{' '}
-      <Code code={'render'}/> 함수 안의 <Code code={'Scene'}/> 컴포넌트가 상태값을 반영해
-      화면을 갱신하게 됩니다. 아직{' '} <Code code={'Scene'}/> 컴포넌트는 작성하지 않았기
-      때문에 오류가 나지 않도록 허수아비만 세워놓은 상태지만 입력받은 <Code code={'world'}/> 안의
-      데이터를 화면에 표시하는 역할을 하게 될 겁니다. 이제 무대의 배경부터 표시해 볼까요?
-    </Paragraph>
+        <Paragraph>
+          우선 뱀의 위치는 화면 중앙이고 진행 방향은 오른쪽인 <Code code={'initialWorld'}/>를 만든
+          다음, <Code code={'Game'}/> 컴포넌트의 <InterestingWord text={'state'}/>로
+          배정했습니다. 이 <InterestingWord text={'state'}/>가 바뀔 때마다 아래 쪽{' '}
+          <Code code={'render'}/> 함수 안의 <Code code={'Scene'}/> 컴포넌트가 상태값을 반영해
+          화면을 갱신하게 됩니다. 아직{' '} <Code code={'Scene'}/> 컴포넌트는 작성하지 않았기
+          때문에 오류가 나지 않도록 허수아비만 세워놓은 상태지만 입력받은 <Code code={'world'}/> 안의
+          데이터를 화면에 표시하는 역할을 하게 될 겁니다. 이제 무대의 배경부터 표시해 볼까요?
+        </Paragraph>
 
-    <Snippet
-      code={
-        `\
+        <Snippet
+          code={
+            `\
 // World -> ReactElement
 const Scene = world => (
   <div
@@ -425,12 +426,14 @@ const Scene = world => (
   >
   </div>
 )`
-      }
-    />
+          }
+        />
 
-    <Paragraph>
-      화면에 출력된 네모난 회색 박스가 게임의 무대입니다. 이제 무대를 채워볼 시간입니다.
-    </Paragraph>
+        <Paragraph>
+          화면에 출력된 네모난 회색 박스가 게임의 무대입니다. 이제 무대를 채워볼 시간입니다.
+        </Paragraph>
+      </Right>
+    </div>
 
     <H4
       number={'2.3.나'}
