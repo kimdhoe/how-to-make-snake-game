@@ -4,6 +4,9 @@ const Right = ({ children }) => (
   <div
     css={{
       width: '65%',
+      '@media (max-width: 768px)': {
+        width: '100%',
+      }
     }}
   >
     {children}

@@ -5,6 +5,9 @@ const Left = ({ children }) => (
     css={{
       marginRight: '2em',
       width: '35%',
+      '@media (max-width: 768px)': {
+        display: 'none',
+      }
     }}
   >
     {children}
