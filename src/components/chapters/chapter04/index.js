@@ -65,6 +65,7 @@ const Chapter04 = ({ title, title1 }) => (
 // World * Action -> World
 const nextWorld = (oldWorld, action) => {
   if (action === 'tick') {
+    // World
     const newWorld = world(oldWorld.snake)
 
     return newWorld
@@ -129,8 +130,11 @@ const nextWorld = (oldWorld, action) => {
 /// World * Action -> World
 const nextWorld = (oldWorld, action) => {
   if (action === 'tick') {
+    // Snake
     const oldSnake = oldWorld.snake
+    // Position
     const newPosition = nextHead(oldSnake.position, oldSnake.direction)
+    // World
     const newWorld = world(newSnake)
 
     return newWorld
@@ -142,7 +146,9 @@ const nextWorld = (oldWorld, action) => {
 // Position * Direction -> Position
 // Given a snake's head and a direction, produces a next head.
 const nextHead = (posn, dir) => {
+  // number
   let x = posn.x
+  // number
   let y = posn.y
 
   if (dir === 'up') {
@@ -205,8 +211,8 @@ class Game extends React.Component {
 
         <Paragraph>
           뱀의 위치가 한 칸 옮겨진 이 새로운 <DataType text={'World'}/>가{' '}
-          <Code code={'<Scene />'}/> 컴포넌트에 전달되고, 다시 요주의 데이터인{' '}
-          <DataType text={'Snake'}/>가 <Code code={'<Snake />'}/>{' '}
+          <Code code={'<Scene />'}/> 컴포넌트에 전달되고, 요주의 데이터인{' '}
+          <DataType text={'Snake'}/>가 다시 <Code code={'<Snake />'}/>{' '}
           컴포넌트에 전달되면서 화면에 표시되는 뱀의 위치가 갱신되고 있습니다. 아직 방향을 바꿀 수 없어서
           금방 벽을 뚫고 사라져 버리긴 하지만 이제 뱀이 움직이고 있습니다!
         </Paragraph>
@@ -226,8 +232,8 @@ class Game extends React.Component {
         <Paragraph>
           위에서 <Code code={'nextHead'}/> 함수를 통해 뱀의 현재 진행 방향에 따라 다음 위치가
           결정되도록 했었죠. 이제 진행 방향을 바꾸는 <DataType text={'Action'}/>들을 처리해서
-          플레이어가 뱀을 마음대로 조작할 수 있도록 할 차례입니다. 현재 정의되어 있는 tick 외에
-          상/하/좌/우 네 방향에 대해 모두 별도로, 총 네 개의{' '}
+          플레이어가 뱀을 마음대로 조작할 수 있도록 할 차례입니다. 현재 정의되어 있는{' '}
+          <Code code={'tick'}/> 외에 상/하/좌/우 네 방향에 대해 모두 별도로, 총 네 개의{' '}
           <DataType text={'Action'}/>을 추가합니다.
         </Paragraph>
 
@@ -242,6 +248,120 @@ class Game extends React.Component {
 //   - 'right'`
           }
         />
+
+        <Paragraph>
+          상/하/좌/우를 나타내는 이 네 개의 값들은 문자 그대로 각각 해당 방향으로의 방향 전환을
+          의미합니다. 이 추가된 <DataType text={'Action'}/>들 역시{' '}
+          <Code code={'nextWorld'}/> 함수를 거쳐 뱀의 진행 방향이 업데이트된 새로운{' '}
+          <DataType text={'World'}/>를 만들어내어야 합니다.
+        </Paragraph>
+
+        <Snippet
+          code={
+            `\
+// World * Action -> World
+const nextWorld = (oldWorld, action) => {
+  if (action === 'tick') {
+    // Snake
+    const oldSnake = oldWorld.snake
+    // Position
+    const newPosition = nextHead(oldSnake.position, oldSnake.direction)
+    // Snake
+    const newSnake = snake(newPosition, oldSnake.direction)
+
+    return world(newSnake)
+  }
+
+  if (action === 'up') {
+    // Snake
+    const newSnake = snake(oldSnake.position, 'up')
+
+    return world(newSnake)
+  }
+
+  if (action === 'down') {
+    // Snake
+    const newSnake = snake(oldSnake.position, 'down')
+
+    return world(newSnake)
+  }
+
+  if (action === 'left') {
+    // Snake
+    const newSnake = snake(oldSnake.position, 'left')
+
+    return world(newSnake)
+  }
+
+  if (action === 'right') {
+    // Snake
+    const newSnake = snake(oldSnake.position, 'right')
+
+    return world(newSnake)
+  }
+
+  return oldWorld
+}`
+          }
+        />
+
+        <Paragraph>
+          방향 전환을 처리하는 위의 코드에 대해서는 별달리 설명할 부분이 없습니다. 단순히 인자{' '}
+          <Code code={'action'}/>에 따라 방향이 변경된 <DataType text={'Snake'}/>를
+          {' '}만들고, 그걸로 다시 <DataType text={'World'}/>를 만들어 반환하고 있습니다.
+          지금은 이 정도로 해 놓고 나중에 후진 금지 같은 제약을 넣어보는 것도 괜찮겠죠?
+        </Paragraph>
+
+        <Paragraph>
+          자, 이제 사용자의 방향키 입력만 처리해주면 뱀을 조작할 있습니다. 위에서 타이머가{' '}
+          <Code code={'tick'}/>을 일정 주기로 발생시켰던 것과 아이디어는 별반 다르지 않습니다.
+          그 때는 일정 주기로 <Code code={'tick'}/>을 <Code code={'nextWorld'}/>{' '}
+          함수에 인자로 넘겨 새 <DataType text={'World'}/>를 만들었었죠. 이번에는 사용자가
+          방향키를 누를 때마다 해당 <DataType text={'Action'}/>을{' '}
+          <Code code={'nextWorld'}/> 함수에 인자로 넘겨 새{' '}
+          <DataType text={'World'}/>를 만들 겁니다. 그런 다음{' '}
+          <InterestingWord text={'React'}/>의 <Code code={'setState'}/>를 이용해
+          기존의 <DataType text={'World'}/>를 대체해주는 걸로 방향 전환의 사이클이 끝이 납니다.
+        </Paragraph>
+
+        <Snippet
+          code={
+            `\
+class Game extends React.Component {
+  // World
+  state = initialWorld
+
+  // -> void
+  componentDidMount () {
+    document.addEventListener('keydown', this.handleKey)
+    setInterval(this.handleTick, INTERVAL)
+  }
+
+  // KeyboardEvent -> void
+  handleKey = e => {
+    const { key } = e
+    let action = null
+
+    if (key === 'ArrowUp') {
+      action = 'up'
+    } else if (key === 'ArrowDown') {
+      action = 'down'
+    } else if (key === 'ArrowLeft') {
+      action = 'left'
+    } else if (key === 'ArrowRight') {
+      action = 'right'
+    }
+
+    if (action) {
+      this.setState(oldWorld => nextWorld(oldWorld, action))
+    }
+  }
+
+  // ...
+}`
+          }
+        />
+
       </Right>
     </div>
   </Chapter>
