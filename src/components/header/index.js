@@ -107,6 +107,7 @@ const styles = {
     color: 'black',
     '@media (max-width: 850px)': {
       position: 'relative',
+      marginTop: '3em',
       padding: 0,
       maxWidth: '100%',
       backgroundColor: 'transparent',
