@@ -24,7 +24,7 @@ const IndexPage = ({ data }) => {
 
         <div css={[ styles.right ]}>
           <Chapters title={title} title1={title1} />
-          <div css={{ height: 700 }} />
+          <div css={{ height: 300 }} />
         </div>
       </div>
 

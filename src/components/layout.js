@@ -24,10 +24,23 @@ const Layout = ({ children }) => (
         </div>
         <div css={[ styles.container ]}>
           {children}
-          <footer>
-            © {new Date().getFullYear()}, Built with
-            {` `}
-            <a href="https://www.gatsbyjs.org">Gatsby</a>
+          <footer css={[ styles.footer ]}>
+            <span css={[ styles.copyright ]}>
+              © {new Date().getFullYear()}
+            </span>
+            {' '}
+            <span css={[ styles.title ]}>
+              {data.site.siteMetadata.title}
+            </span>
+            {' '}
+            by
+            {' '}
+            <a
+              css={[ styles.link ]}
+              href={'https://dhk.party'}
+            >
+              Donghee Kim
+            </a>
           </footer>
         </div>
       </>
@@ -48,7 +61,31 @@ const styles = {
   },
   header: {
     marginBottom: '5em',
-    // backgroundColor: '#f1f3f5',
+  },
+  footer: {
+    textAlign: 'center',
+    fontSize: '0.9em',
+  },
+  copyright: {
+  },
+  title: {
+    padding: '0 0.2em',
+    fontFamily: 'Georgia',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    fontSize: '1.1em',
+  },
+  link: {
+    marginLeft: '0.2em',
+    borderBottom: '2px solid black',
+    textDecoration: 'none',
+    fontWeight: 900,
+    fontSize: '1.1em',
+    color: 'black',
+    ':hover': {
+      color: '#087f5b',
+      borderColor: '#087f5b',
+    },
   },
 }
 
