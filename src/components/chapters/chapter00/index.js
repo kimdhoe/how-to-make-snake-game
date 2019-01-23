@@ -79,8 +79,8 @@ const Chapter00 = ({ title, title1 }) => (
         <Paragraph>
           이 튜토리얼은 복잡한 설정을 피하기 위해{' '}
           <a
-            css={{ color: '#333', }}
-            href=""
+            css={{ color: '#333' }}
+            href="https://facebook.github.io/create-react-app/"
           >
             <InterestingWord very text={'create-react-app'}/>
           </a>을 사용합니다. 새로 생성한 프로젝트의 <Code code={'src/App.js'}/> 파일의 내용을

@@ -19,11 +19,14 @@ const Header = ({ description }) => (
             Snake Game
           </span>
         </h1>
+        <p css={[ styles.beta ]}>
+          v0.0.1-beta.1
+        </p>
       </div>
 
       <div css={[ styles.note ]}>
         <p css={[ styles.noteTitle ]}>
-          뱀 게임 만드는 법{' '}
+          뱀 게임 만드는 법
         </p>
         <p css={[ styles.noteText ]}>
           시작하는 프로그래머를 위한 인터랙티브 튜토리얼.{' '}
@@ -135,7 +138,14 @@ const styles = {
   },
   strong: {
     textDecoration: 'underline',
+    fontStyle: 'italic',
     fontWeight: 400,
+  },
+  beta: {
+    fontWeight: 600,
+    fontSize: '1.3em',
+    fontFamily: 'Georgia',
+    fontStyle: 'italic',
   },
 }
 

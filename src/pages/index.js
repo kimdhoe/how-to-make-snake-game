@@ -14,7 +14,7 @@ const IndexPage = ({ data }) => {
   return (
     <Layout>
       <SEO
-        title={'How to Make Snake Game'}
+        title={'뱀 게임 만드는 법 (How to Make Snake Game)'}
       />
 
       <div css={[ styles.container ]}>

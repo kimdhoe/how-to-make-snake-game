@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "how-to-make-snake-game",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
-  "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "description": "뱀 게임 만드는 법: 시작하는 프로그래머를 위한 인터랙티브 튜토리얼",
+  "version": "0.0.1-beta.1",
+  "author": "Donghee Kim <kimdhoe1@gmail.com>",
   "dependencies": {
     "@emotion/core": "^10.0.6",
     "@emotion/styled": "^10.0.6",
@@ -41,7 +41,7 @@
     "develop": "gatsby develop",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
-    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+    "test": "echo \"Write tests!\""
   },
   "devDependencies": {
     "eslint-plugin-react": "^7.12.3",
@@ -51,9 +51,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/kimdhoe/how-to-make-snake-game"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/kimdhoe/how-to-make-snake-game/issues"
   }
 }
