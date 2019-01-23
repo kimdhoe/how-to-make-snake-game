@@ -13,7 +13,9 @@ const IndexPage = ({ data }) => {
 
   return (
     <Layout>
-      <SEO />
+      <SEO
+        title={'How to Make Snake Game'}
+      />
 
       <div css={[ styles.container ]}>
         {/*<div css={[ styles.left ]}>*/}

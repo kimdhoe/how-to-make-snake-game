@@ -13,6 +13,7 @@ const Layout = ({ children }) => (
         site {
           siteMetadata {
             title
+            description
           }
         }
       }
@@ -20,7 +21,7 @@ const Layout = ({ children }) => (
     render={data => (
       <>
         <div css={[ styles.header ]}>
-          <Header />
+          <Header description={data.site.siteMetadata.description} />
         </div>
         <div css={[ styles.container ]}>
           {children}
@@ -84,7 +85,7 @@ const styles = {
     color: 'black',
     ':hover': {
       color: '#087f5b',
-      borderColor: '#087f5b',
+      borderColor: '#5c940d',
     },
   },
 }
