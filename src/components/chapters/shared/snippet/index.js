@@ -10,7 +10,7 @@ const Snippet = ({ children, hideFilename = false, changed = [], code, ...rest }
       style={base16AteliersulphurpoolLight}
       customStyle={{ margin: 0 }}
       language={'javascript'}
-      showLineNumbers
+      // showLineNumbers
       lineNumberContainerStyle={{
         minWidth: 40,
         fontFamily: `Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", "Courier New", Courier, monospace`,
