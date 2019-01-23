@@ -42,11 +42,12 @@ const Chapter04 = ({ title, title1 }) => (
         </Paragraph>
 
         <Paragraph>
-          일정 시간 간격이 지나 뱀이 앞으로 한 칸 움직여야 할 때, 기존 World 데이터를 바탕으로 뱀의
-          위치가 업데이트된 새로운 <DataType text={'World'}/>를 만들 수 있습니다. 이
-          아이디어를 <Code code={'nextWorld'}/>라는 함수로 표현해볼까요? 일단 새{' '}
+          일정 시간 간격이 지나 뱀이 앞으로 한 칸 움직여야 할 때, 기존{' '}
+          <DataType text={'World'}/> 데이터를 바탕으로 뱀의 위치가 업데이트된 새로운{' '}
+          <DataType text={'World'}/>를 만들 수 있습니다. 이 아이디어를{' '}
+          <Code code={'nextWorld'}/>라는 함수로 표현해볼까요? 일단 새{' '}
           <DataType text={'World'}/>를 만드는 로직은 비워두고 언제나 기존{' '}
-          <DataType text={'World'}/>와 똑같은 복사본을 그대로 반환하도록 합니다.
+          <DataType text={'World'}/>와 똑같은 복사본을 만들어 반환하도록 합니다.
         </Paragraph>
 
         <Snippet
@@ -110,7 +111,7 @@ const nextWorld = (oldWorld, action) => {
         </ul>
 
         <Paragraph>
-          위의 코드는 아직 다른 <DataType text={'Action'}/>은 무시하고
+          위의 코드는 아직 다른 <DataType text={'Action'}/>은 무시하고{' '}
           <Code code={'tick'}/>에 대해서만 새로운 상태를 만들 준비를 하고 있습니다. 이{' '}
           <Code code={'tick'}/>은 뱀이 전진해야 할 시간을 알리는 것이므로 우리는 뱀이 한 칸
           전진한 새로운 <DataType text={'World'}/>를 만들어내야 합니다.
@@ -187,16 +188,27 @@ class Game extends React.Component {
   handleTick = () => {
     this.setState(oldWorld => nextWorld(oldWorld, 'tick'))
   }
-`
+
+  // ...
+}`
           }
         />
 
         <Paragraph>
-          뱀이 움직이면서 게임이 진행될 수 있도록 <Code code={'INTERVAL'}/> 밀리초 간격으로
-          {' '}<Code code={'handleTick'}/> 메써드를 실행하는 타이머를 설치헀습니다. 타이머에
-          의해 일정 시간 간격으로 계속 반복 실행되는 <Code code={'handleTick'}/> 함수는 매번
-          {' '}<Code code={'nextWorld'}/>를 이용해 새 <DataType World />를 만든 뒤
-          그것을 기존의 World와 교체하고 있습니다.
+          <Code code={'INTERVAL'}/> 밀리초 간격으로
+          {' '}<Code code={'handleTick'}/> 메서드를 실행하는 타이머가 설치되었습니다.{' '}
+          <Code code={'handleTick'}/> 메서드는 타이머에 의해 반복적으로 실행될 때마다
+          매번 <Code code={'nextWorld'}/>를 이용해서 새 <DataType text={'World'}/>를
+          만든 다음, 그것을 기존의 <DataType text={'World'}/>와 교체해주고 있습니다.
+
+        </Paragraph>
+
+        <Paragraph>
+          뱀의 위치가 한 칸 옮겨진 이 새로운 <DataType text={'World'}/>가{' '}
+          <Code code={'<Scene />'}/> 컴포넌트에 전달되고, 다시 요주의 데이터인{' '}
+          <DataType text={'Snake'}/>가 <Code code={'<Snake />'}/>{' '}
+          컴포넌트에 전달되면서 화면에 표시되는 뱀의 위치가 갱신되고 있습니다. 아직 방향을 바꿀 수 없어서
+          금방 벽을 뚫고 사라져 버리긴 하지만 이제 뱀이 움직이고 있습니다!
         </Paragraph>
       </Right>
     </div>
@@ -212,10 +224,10 @@ class Game extends React.Component {
         <H3 number={'4.2'} text={'방향을 바꾸는 뱀'} />
 
         <Paragraph>
-          뱀의 다음 위치는 현재 진행 방향에 따라 결정되고 있습니다. 이제 플레이어가 마음대로 뱀을
-          조작할 수 있도록 방향과 관련된 다른 <DataType text={'Action'}/>들을 처리하겠습니다.
-          현재 우리는 <Code code={'tick'}/> 하나의 <DataType text={'Action'}/>만
-          정의해 놓고 있는 상태입니다. 네 방향에 대해 모두 별도로, 총 네 개의{' '}
+          위에서 <Code code={'nextHead'}/> 함수를 통해 뱀의 현재 진행 방향에 따라 다음 위치가
+          결정되도록 했었죠. 이제 진행 방향을 바꾸는 <DataType text={'Action'}/>들을 처리해서
+          플레이어가 뱀을 마음대로 조작할 수 있도록 할 차례입니다. 현재 정의되어 있는 tick 외에
+          상/하/좌/우 네 방향에 대해 모두 별도로, 총 네 개의{' '}
           <DataType text={'Action'}/>을 추가합니다.
         </Paragraph>
 

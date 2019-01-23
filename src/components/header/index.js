@@ -39,7 +39,7 @@ const Header = () => (
 const styles = {
   container: {
     margin: '0 auto',
-    maxWidth: 1024,
+    maxWidth: 960,
     borderRadius: 17,
     padding: '1em 1.5em 0',
   },

@@ -150,65 +150,67 @@ const Times = () => (
 
 const StateFigure = () => (
   <div css={[ styles.container ]}>
-    <p>
-      <span css={[ styles.type, styles.title ]}>
-        World
-      </span>
-      <Arrow />
-      <span css={[ styles.type ]}>
-        Snake
-      </span>
-    </p>
+    <div>
+      <p>
+        <span css={[ styles.type, styles.title ]}>
+          World
+        </span>
+        <Arrow />
+        <span css={[ styles.type ]}>
+          Snake
+        </span>
+      </p>
 
-    <p>
-      <span css={[ styles.type, styles.title ]}>
-        Snake
-      </span>
-      <Arrow />
-      <span css={[ styles.type ]}>
-        Position
-      </span>
-      <Times />
-      <span css={[ styles.type ]}>
-        Direction
-      </span>
-    </p>
+      <p>
+        <span css={[ styles.type, styles.title ]}>
+          Snake
+        </span>
+        <Arrow />
+        <span css={[ styles.type ]}>
+          Position
+        </span>
+        <Times />
+        <span css={[ styles.type ]}>
+          Direction
+        </span>
+      </p>
 
-    <p>
-      <span css={[ styles.type, styles.title ]}>
-        Position
-      </span>
-      <Arrow />
-      <span css={[ styles.type ]}>
-        number
-      </span>
-      <Times />
-      <span css={[ styles.type ]}>
-        number
-      </span>
-    </p>
+      <p>
+        <span css={[ styles.type, styles.title ]}>
+          Position
+        </span>
+        <Arrow />
+        <span css={[ styles.type ]}>
+          number
+        </span>
+        <Times />
+        <span css={[ styles.type ]}>
+          number
+        </span>
+      </p>
 
-    <p>
-      <span css={[ styles.type, styles.title ]}>
-        Direction
-      </span>
-      <Arrow />
-      <span css={[ styles.type, styles.literal ]}>
-        ↑
-      </span>
-      <Pipe />
-      <span css={[ styles.type, styles.literal ]}>
-        →
-      </span>
-      <Pipe />
-      <span css={[ styles.type, styles.literal ]}>
-        ↓
-      </span>
-      <Pipe />
-      <span css={[ styles.type, styles.literal ]}>
-        ←
-      </span>
-    </p>
+      <p>
+        <span css={[ styles.type, styles.title ]}>
+          Direction
+        </span>
+        <Arrow />
+        <span css={[ styles.type, styles.literal ]}>
+          ↑
+        </span>
+        <Pipe />
+        <span css={[ styles.type, styles.literal ]}>
+          →
+        </span>
+        <Pipe />
+        <span css={[ styles.type, styles.literal ]}>
+          ↓
+        </span>
+        <Pipe />
+        <span css={[ styles.type, styles.literal ]}>
+          ←
+        </span>
+      </p>
+    </div>
 
     <div css={[ styles.sample ]}>
       <SampleWorld />

@@ -35,13 +35,13 @@ const IndexPage = ({ data }) => {
 const styles = {
   container: {
     display: 'flex',
+    width: '100%',
   },
   left: {
     width: '40%',
   },
   right: {
-    // marginLeft: 50,
-    // width: '60%',
+    width: '100%',
   },
   game: {
     position: 'sticky',
