@@ -31,6 +31,10 @@ function SEO({ description, lang, meta, keywords, title }) {
                 content: metaDescription,
               },
               {
+                property: 'og:image',
+                content: 'https://kimdhoe.github.io/how-to-make-snake-game/snake-game.png',
+              },
+              {
                 property: `og:type`,
                 content: `website`,
               },

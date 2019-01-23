@@ -8,6 +8,7 @@ module.exports = {
       '프로그램을 조감하는 기분을 만끽해보세요.',
     author: '@kimdhoe',
   },
+  pathPrefix: '/how-to-make-snake-game',
   plugins: [
     {
       resolve: 'gatsby-plugin-emotion',
